@@ -85,9 +85,9 @@ flutter run
 
 Replace this section with real screenshots before sharing your portfolio/CV link. Capture at minimum:
 
-| Light mode            | Dark mode | Error state | Memory in use |
-|-----------------------|---|---|---|
-| *![img.png](img.png)* | *![img_1.png](img_1.png)(screenshot)* | *(screenshot)* | *(screenshot)* |
+| Light mode | Dark mode | Error state | Memory in use |
+|---|---|---|---|
+| *![img_1.png](img_1.png)* | *![img.png](img.png)* | *![img_2.png](img_2.png)* | *![img_3.png](img_3.png)* |
 
 A quick way to generate clean device-frame screenshots: run the app on an emulator, then use `flutter screenshot` or your IDE's screenshot tool.
 

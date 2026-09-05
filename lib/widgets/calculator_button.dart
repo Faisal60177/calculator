@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-enum CalcButtonType {number, operatorBtn, action, equals}
+enum CalcButtonType { number, operatorBtn, action, equals, memory }
 
-class CalculatorButton  extends StatelessWidget{
+class CalculatorButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final CalcButtonType type;
   final int flex;
 
@@ -16,20 +15,27 @@ class CalculatorButton  extends StatelessWidget{
     required this.onPressed,
     this.type = CalcButtonType.number,
     this.flex = 1,
-});
+  });
 
-  Color _background(BuildContext context){
-    final schema = Theme.of(context).colorScheme;
-    switch(type){
+  Color _background(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    switch (type) {
       case CalcButtonType.operatorBtn:
-        return schema.primary;
+        return scheme.primary;
       case CalcButtonType.action:
-        return schema.surfaceContainerHighest;
+        return scheme.surfaceContainerHighest;
       case CalcButtonType.equals:
-        return schema.tertiary;
+        return scheme.tertiary;
+      case CalcButtonType.memory:
+        return Colors.transparent;
       case CalcButtonType.number:
-        return schema.surfaceContainerHigh;
+        return scheme.surfaceContainerHigh;
     }
+  }
+
+  ShapeBorder? _shape() {
+    if (type == CalcButtonType.memory) return null;
+    return RoundedRectangleBorder(borderRadius: BorderRadius.circular(28));
   }
 
   Color _foreground(BuildContext context) {
@@ -41,42 +47,47 @@ class CalculatorButton  extends StatelessWidget{
         return scheme.onTertiary;
       case CalcButtonType.action:
         return scheme.onSurfaceVariant;
+      case CalcButtonType.memory:
+        return onPressed == null
+            ? scheme.onSurfaceVariant.withOpacity(0.35)
+            : scheme.primary;
       case CalcButtonType.number:
         return scheme.onSurface;
     }
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    final isFlat = type == CalcButtonType.memory;
     return Expanded(
-        flex: flex,
-        child: Padding(padding: const EdgeInsets.all(6),
+      flex: flex,
+      child: Padding(
+        padding: EdgeInsets.all(isFlat ? 4 : 6),
         child: Material(
           color: _background(context),
-          shape: const CircleBorder(),
+          shape: _shape(),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            onTap: (){
+            onTap: onPressed == null
+                ? null
+                : () {
               HapticFeedback.lightImpact();
-              onPressed();
+              onPressed!();
             },
 
-            child: AspectRatio(aspectRatio: flex == 2 ? 2.2 : 1,
-            child: Align(
-              alignment: flex ==2 ? const Alignment(-0.5, 0) : Alignment.center,
+            child: Center(
               child: Text(
                 label,
                 style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w500,
+                  fontSize: isFlat ? 18 : 26,
+                  fontWeight: isFlat ? FontWeight.w600 : FontWeight.w500,
                   color: _foreground(context),
                 ),
               ),
             ),
-            ),
           ),
         ),
-        ),
+      ),
     );
   }
 }

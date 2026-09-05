@@ -14,7 +14,7 @@ A production-style calculator app built with Flutter, using the **Cubit** (BLoC 
   <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow">
 </p>
 
-> 📸 *Add your own screenshots/GIF here before publishing —see [Screenshots](#-screenshots) below for exactly what to capture.*
+> 📸 *see [Screenshots](#-screenshots) below for exactly what to capture.*
 
 ---
 
